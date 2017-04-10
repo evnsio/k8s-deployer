@@ -1,0 +1,10 @@
+version: "2"
+services:
+  k8s-deployer:
+    build: .
+    image: evns/k8s-deployer
+    environment:
+      - MASTER_HOST=https://52.214.224.122:6443
+      - CA_DATA=...
+      - CLIENT_KEY=...
+      - CLIENT_DATA=...
