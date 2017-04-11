@@ -1,10 +1,16 @@
 version: "2"
 services:
-  k8s-deployer:
+  k8s-deployer-env:
     build: .
     image: evns/k8s-deployer
     environment:
-      - MASTER_HOST=https://52.214.224.122:6443
+      - MASTER_HOST=...
       - CA_DATA=...
       - CLIENT_KEY=...
       - CLIENT_DATA=...
+
+  k8s-deployer-mount:
+    build: .
+    image: evns/k8s-deployer
+    volumes:
+      - ~/.kube/config:/root/.kube/config

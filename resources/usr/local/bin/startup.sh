@@ -1,8 +1,14 @@
 #!/bin/sh
 
-mkdir -p /root/.kube/
+KUBECONFIG=/root/.kube/config
 
-sh -c "cat > /root/.kube/config" <<EOF
+if [ -f ${KUBECONFIG} ]; then
+   echo "Using externally mounted Kubeconfig file..."
+else
+   echo "Kubeconfig not found, configuring using env vars..."
+
+    mkdir -p /root/.kube/
+    sh -c "cat > ${KUBECONFIG}" <<EOF
 apiVersion: v1
 clusters:
 - cluster:
@@ -23,6 +29,8 @@ users:
     client-certificate-data: ${CLIENT_DATA}
     client-key-data: ${CLIENT_KEY}
 EOF
+
+fi
 
 # run sh as entrypoint
 exec /bin/sh -c "$@"
